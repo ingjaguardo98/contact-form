@@ -1,0 +1,77 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="contact-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding-bottom: 70px;
+      }
+
+      .blue {
+        position: fixed;
+        right: 30px;
+        color: white;
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+        background-color: #006ec1;
+        }
+
+    </style>
+
+    <h2>¡Bienvenido [[namecontact]]!</h2>
+    <paper-input id="idName" label="name" value="{{namecontact}}">
+      <iron-icon icon="account-box" slot="prefix"></iron-icon>
+    </paper-input>
+    <paper-input id="idMobile" label="mobile">
+      <iron-icon icon="settings-cell" slot="prefix"></iron-icon>
+    </paper-input>
+    <paper-input id="idEmail" label="username">
+      <iron-icon icon="mail" slot="prefix"></iron-icon>
+      <div slot="suffix">@email.com</div>
+    </paper-input>
+    <paper-button raised class="blue" on-click="send"><iron-icon icon="send"></iron-icon></paper-button>
+  </template>
+
+  <script>
+    /**
+     * `contact-form`
+     * contact data registration form
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ContactForm extends Polymer.Element {
+      static get is() { return 'contact-form'; }
+
+      static get properties() {
+        return {
+          namecontact: {
+            type: String,
+            value: ''
+          }
+        };
+      }
+
+      send() {
+        this.dispatchEvent(new CustomEvent('send-form',{
+          bubbles: true,
+          composed: true,
+          detail: {
+            name: this.$.idName.value,
+            mobile: this.$.idName.value,
+            email: this.$.idEmail.value
+            }
+        }));      
+      }
+    }
+
+    window.customElements.define(ContactForm.is, ContactForm);
+  </script>
+</dom-module>
